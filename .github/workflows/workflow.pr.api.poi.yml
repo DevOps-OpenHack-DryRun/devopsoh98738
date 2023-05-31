@@ -42,14 +42,23 @@ jobs:
         run: |
           dotnet test --logger "trx;LogFileName=UnitTestResults.trx" --results-directory ./TestResults --no-build --filter "FullyQualifiedName~UnitTest"
 
-      - name: "Publish test results"
-        if: success() || failure()
-        uses: dorny/test-reporter@v1
+    #   - name: "Publish test results"
+    #     if: success() || failure()
+    #     uses: dorny/test-reporter@v1
+    #     with:
+    #       name: Test results
+    #       path: "${{ env.WORKDIR }}/TestResults/UnitTestResults.trx"
+    #       reporter: dotnet-trx
+    #       fail-on-error: false
+
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
         with:
-          name: Test results
-          path: "${{ env.WORKDIR }}/TestResults/UnitTestResults.trx"
-          reporter: dotnet-trx
-          fail-on-error: false
+            name: dotnet-results-${{ env.DOTNET_VERSION }}"
+            path: T"${{ env.WORKDIR }}/TestResults/UnitTestResults.trx"
+            # Use always() to always run this step to publish test results when there are test failures
+            if: success() || failure()
+
 
       - name: "Create an issue (bug)"
         if: failure() && github.event_name != 'pull_request'
