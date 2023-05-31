@@ -9,7 +9,7 @@ namespace poi.Controllers
 {
     [Produces("application/json")]
     [Route("api/poi")]
-    public class POIController : ControllerBase
+    public class POIController : ControllerBase-hoge
     {
         private readonly POIContext _context;
 
