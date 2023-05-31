@@ -55,7 +55,7 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
-            name: dotnet-results-${{ env.DOTNET_VERSION }}"
+            name: dotnet-results-${{ env.DOTNET_VERSION }}
             path: "${{ env.WORKDIR }}/TestResults/UnitTestResults.trx"
             # Use always() to always run this step to publish test results when there are test failures
 
